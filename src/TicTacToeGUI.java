@@ -121,8 +121,8 @@ public class TicTacToeGUI extends JFrame {
                         if (((JButton)e.getSource()).getText().equals("") &&
                                 !hasWinner) {
                             btn.setText(currentPlayer);
-                            //hasWinner();
-                            hasWinnerBeta();
+                            hasWinner();
+                            //hasWinnerBeta();
                             togglePlayer();
                         }
                     }
@@ -132,13 +132,14 @@ public class TicTacToeGUI extends JFrame {
         }
     }
     private void togglePlayer() {
+        //hasWinnerBeta();
         if (currentPlayer.equals("X"))
             currentPlayer = "O";
         else
             currentPlayer = "X";
 
     }
-    /*private void hasWinner() {
+    private void hasWinner() {
         boardFilled();
         if (board[0][0].getText().equals(currentPlayer) && board[1][0].getText().equals(currentPlayer) && board[2][0].getText().equals(currentPlayer)){
             JOptionPane.showMessageDialog(null,"Player "+ currentPlayer+" has won.");
@@ -172,9 +173,9 @@ public class TicTacToeGUI extends JFrame {
             JOptionPane.showMessageDialog(null,"Player "+ currentPlayer+" has won.");
             hasWinner = true;
         }
-    }*/
+    }
     public static boolean hasWinnerBeta(){//y is column, x is row
-        
+
         boolean hasWon;
         int y = 0;
         String Player = board[x][y].toString();
@@ -209,7 +210,7 @@ public class TicTacToeGUI extends JFrame {
 
         if(hasWon){
             JOptionPane.showMessageDialog(null,"Player "+ currentPlayer+" has won.");
-            resetBoard();
+            //resetBoard();
             hasWinner = true;
         }
         boardFilled();
@@ -229,7 +230,7 @@ public class TicTacToeGUI extends JFrame {
             if(n == 0){
                 if(hasWinner==false){
                     JOptionPane.showMessageDialog(null,"Game is a draw!");
-                    resetBoard();
+                    //resetBoard();
                 }
             }
         }
