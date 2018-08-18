@@ -9,6 +9,5 @@ public class Main {
                 new TicTacToeGUI();
             }
         });
-        //new TicTacToeGUI();
     }
 }

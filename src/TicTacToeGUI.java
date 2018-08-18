@@ -25,7 +25,7 @@ public class TicTacToeGUI extends JFrame {
         pane.setLayout(new GridLayout(3,3));
         setTitle("Tic Tac Toe");
         setSize(500,500);
-        setResizable(false); //TODO:experiment with true
+        setResizable(true); //TODO:experiment with true
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         currentPlayer = "x";
