@@ -86,10 +86,10 @@ public class TicTacToeGUI extends JFrame {
         menuBar.add(new JToggleButton(toggleAction));
         setJMenuBar(menuBar);
     }
-    private void resetBoard(){
+    private static void resetBoard(){
         currentPlayer = "X";
         hasWinner = false;
-        for (int i = 0; i<boardSize; i++){
+        for (int i = 0; i<3; i++){
             for (int j = 0; j<3; j++) {
                 board[i][j].setText("");
             }
@@ -209,6 +209,7 @@ public class TicTacToeGUI extends JFrame {
 
         if(hasWon){
             JOptionPane.showMessageDialog(null,"Player "+ currentPlayer+" has won.");
+            resetBoard();
             hasWinner = true;
         }
 
@@ -228,6 +229,7 @@ public class TicTacToeGUI extends JFrame {
             if(n == 0){
                 if(hasWinner==false){
                     JOptionPane.showMessageDialog(null,"Game is a draw!");
+                    resetBoard();
                 }
             }
         }
