@@ -9,19 +9,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import java.awt.BorderLayout;
 import java.awt.Color;
 
 public class TicTacToeGUI extends JFrame {
     private Container pane;
-    public int R;
-    public int G;
-    public int B;
-
+    private static int x =0;
+    private static int n;
     private int style = 0;
-    private String currentPlayer;
-    private JButton [][] board;
-    private boolean hasWinner;
+    private static String currentPlayer;
+    private static JButton [][] board;
+    private static boolean hasWinner;
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem quit;
@@ -56,11 +53,13 @@ public class TicTacToeGUI extends JFrame {
                     style = 1;
                     resetBoard();
                     initializeBoard();
+
                 } else {
                     button.setText("Dark Mode");
                     style = 0;
                     resetBoard();
                     initializeBoard();
+
                 }
             }
         };
@@ -84,7 +83,6 @@ public class TicTacToeGUI extends JFrame {
         menu.add(newGame);
         menu.add(quit);
         menuBar.add(menu);
-        //menuBar.add(new JMenu("Appearance"));
         menuBar.add(new JToggleButton(toggleAction));
         setJMenuBar(menuBar);
     }
@@ -97,25 +95,10 @@ public class TicTacToeGUI extends JFrame {
             }
         }
     }
-    /*public void darkStyle(){ 
-        btn.setOpaque(true);
-        btn.setBorder(darkBorder);
-        btn.setForeground(new Color(111, 153, 237));
-    }
-
-    public void lightStyle() {
-        btn.setOpaque(true);
-        btn.setBorder(lightBorder);
-        btn.setForeground(new Color(16, 92, 242));
-    }*/
     private void initializeBoard() {
-        /*if (style  ==  0){
-            lightStyle();
-        } else {
-            darkStyle();
-        }*/
         getContentPane().removeAll();
         getContentPane().repaint();
+        n= 9;
         for (int i = 0; i<boardSize; i++){
             for (int j = 0; j<3; j++) {
                 JButton btn = new JButton();
@@ -136,9 +119,10 @@ public class TicTacToeGUI extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (((JButton)e.getSource()).getText().equals("") &&
-                                hasWinner == false) {
+                                !hasWinner) {
                             btn.setText(currentPlayer);
-                            hasWinner();
+                            //hasWinner();
+                            hasWinnerBeta();
                             togglePlayer();
                         }
                     }
@@ -154,8 +138,8 @@ public class TicTacToeGUI extends JFrame {
             currentPlayer = "X";
 
     }
-    private void hasWinner() { //TODO: Optimization
-
+    /*private void hasWinner() {
+        boardFilled();
         if (board[0][0].getText().equals(currentPlayer) && board[1][0].getText().equals(currentPlayer) && board[2][0].getText().equals(currentPlayer)){
             JOptionPane.showMessageDialog(null,"Player "+ currentPlayer+" has won.");
             hasWinner = true;
@@ -188,8 +172,66 @@ public class TicTacToeGUI extends JFrame {
             JOptionPane.showMessageDialog(null,"Player "+ currentPlayer+" has won.");
             hasWinner = true;
         }
+    }*/
+    public static boolean hasWinnerBeta(){//y is column, x is row
+        boardFilled();
+        boolean hasWon;
+        int y = 0;
+        String Player = board[x][y].toString();
+        boolean onDiagonal = (x == y) || (y == -1 * x + (board.length-1));
+        boolean HorizontalWin = true;
+        boolean VerticalWin = true;
+        boolean DiagonalWinOne = true;
+        boolean DiagonalWinTwo = true;
+
+        for(int i= 0; i < 3; i++){
+            if(!board[x][i].getText().equals(currentPlayer)){
+                HorizontalWin = false;
+            }
+            if(!board[i][y].getText().equals(currentPlayer)){
+                VerticalWin = false;
+            }
+        }
+        if(onDiagonal){
+            // Check the diagonals
+            for(int n = 0; n < 3; n++){
+                if(!board[n][n].getText().equals(currentPlayer))
+                    DiagonalWinOne = false;
+                if(!board[n][-1*n+(3-1)].getText().equals(currentPlayer))
+                    DiagonalWinTwo = false;
+            }
+        }
+        else{
+            DiagonalWinOne = false;
+            DiagonalWinTwo = false;
+        }
+        hasWon = (HorizontalWin || VerticalWin || DiagonalWinOne || DiagonalWinTwo);
+
+        if(hasWon){
+            JOptionPane.showMessageDialog(null,"Player "+ currentPlayer+" has won.");
+            hasWinner = true;
+        }
+
+        return hasWon;
     }
+    public static void boardFilled(){
+        n=9;
+        for (int i=0;i<board.length;i++){
+            for(int j = 0; j< board.length;j++){
+                if(board[i][j].getText()!=""){
+                    n--;
+                }
+                else{
+                    break;
+                }
+            }
+            if(n == 0){
+                if(hasWinner==false){
+                    JOptionPane.showMessageDialog(null,"Game is a draw!");
+                }
+            }
+        }
 
-
+    }
 
 }
