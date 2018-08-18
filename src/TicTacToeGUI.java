@@ -174,7 +174,7 @@ public class TicTacToeGUI extends JFrame {
         }
     }*/
     public static boolean hasWinnerBeta(){//y is column, x is row
-        boardFilled();
+        
         boolean hasWon;
         int y = 0;
         String Player = board[x][y].toString();
@@ -212,7 +212,7 @@ public class TicTacToeGUI extends JFrame {
             resetBoard();
             hasWinner = true;
         }
-
+        boardFilled();
         return hasWon;
     }
     public static void boardFilled(){
